@@ -1,4 +1,4 @@
-package cn.seeyourface.array;
+package cn.seeyourface.array.binarySearch;
 
 import java.util.Arrays;
 
