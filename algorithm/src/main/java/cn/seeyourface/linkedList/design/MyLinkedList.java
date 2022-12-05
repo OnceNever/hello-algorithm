@@ -75,6 +75,7 @@ public class MyLinkedList {
             head = newNode;
             tail = newNode;
             size++;
+            return;
         }
 
         MyLinkedList first = getIndex(0);
@@ -85,6 +86,7 @@ public class MyLinkedList {
             first.prev = newNode;
             head = newNode;
             size++;
+            return;
         }
     }
 
@@ -118,9 +120,9 @@ public class MyLinkedList {
         MyLinkedList newNode = new MyLinkedList();
         newNode.val = val;
         newNode.prev = node;
+        newNode.next = nextNode;
         node.next = newNode;
-        newNode.next = newNode;
-        newNode.prev = newNode;
+        nextNode.prev = newNode;
         size++;
     }
 
@@ -133,5 +135,15 @@ public class MyLinkedList {
         prev.next = next;
         next.prev = prev;
         size--;
+    }
+
+    public static void main(String[] args) {
+        MyLinkedList linkedList = new MyLinkedList();
+        linkedList.addAtHead(1);
+        linkedList.addAtTail(3);
+        linkedList.addAtIndex(1,2);   //链表变为1-> 2-> 3
+        int i = linkedList.get(1);// 返回2
+        linkedList.deleteAtIndex(1);    // 现在链表是1-> 3
+        int i1 = linkedList.get(1);
     }
 }
