@@ -2,6 +2,9 @@ package cn.seeyourface.linkedList.merge;
 
 import cn.seeyourface.entity.ListNode;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * <p>
  *     给你一个链表数组，每个链表都已经按升序排列。
@@ -46,7 +49,7 @@ import cn.seeyourface.entity.ListNode;
  * @date 2022/12/7 11:15
  */
 public class Que_23 {
-    // 化整为零，先将两个有序链表合为一个，再将合并的链表与原有链表进行合并，直到只剩下一个链表
+    // 方法1 ：化整为零，先将两个有序链表合为一个，再将合并的链表与原有链表进行合并，直到只剩下一个链表
     static ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
         if (lists.length == 1) return lists[0];
@@ -93,8 +96,41 @@ public class Que_23 {
         return head.next;
     }
 
+    // 方法二：利用优先队列（二叉堆）添加数据后会自动排序
+    static ListNode mergeKLists2(ListNode[] lists) {
+        ListNode head = new ListNode(-1);
+        ListNode temp = head;
+        // 最小堆
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(lists.length, new comp());
+
+        for (ListNode list : lists) {
+            if (list != null)
+                queue.add(list);
+        }
+
+
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            temp.next =node;
+            if (node.next != null) {
+                queue.add(node.next);
+            }
+            temp = temp.next;
+        }
+        return head.next;
+    }
+
+    static class comp implements Comparator<ListNode> {
+
+        @Override
+        public int compare(ListNode o1, ListNode o2) {
+            return o1.val - o2.val;
+        }
+    }
+
     public static void main(String[] args) {
-        ListNode[] lists = new ListNode[0];
-        mergeKLists(lists);
+        ListNode[] lists = new ListNode[1];
+        lists[0] = new ListNode(1);
+        mergeKLists2(lists);
     }
 }
