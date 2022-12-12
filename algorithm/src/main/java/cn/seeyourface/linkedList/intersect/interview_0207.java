@@ -57,6 +57,16 @@ import cn.seeyourface.entity.ListNode;
  */
 public class interview_0207 {
     static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        return null;
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        while (p1 != p2) {
+            p1 = p1.next;
+            p2 = p2.next;
+            if (p1 == null && p2 != null)
+                p1 = headB;
+            if (p1 != null && p2 == null)
+                p2 = headA;
+        }
+        return p1;
     }
 }
